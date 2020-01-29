@@ -16,6 +16,7 @@
 
 //! Consensus engine specification and basic implementations.
 
+mod my_authority_round;
 mod authority_round;
 mod basic_authority;
 mod instant_seal;
@@ -25,6 +26,7 @@ mod validator_set;
 
 pub mod block_reward;
 
+pub use self::my_authority_round::MAura;
 pub use self::authority_round::AuthorityRound;
 pub use self::basic_authority::BasicAuthority;
 pub use self::epoch::{EpochVerifier, Transition as EpochTransition};

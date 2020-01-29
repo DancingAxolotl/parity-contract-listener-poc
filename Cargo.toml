@@ -56,6 +56,7 @@ parity-local-store = { path = "miner/local-store" }
 parity-runtime = { path = "util/runtime" }
 parity-rpc = { path = "rpc" }
 parity-updater = { path = "updater" }
+parity-listener = { path = "listener" }
 parity-version = { path = "util/version" }
 parity-whisper = { path = "whisper" }
 parity-path = "0.1"

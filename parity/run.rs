@@ -45,6 +45,7 @@ use parity_runtime::Runtime;
 use parity_rpc::{Origin, Metadata, NetworkSettings, informant, is_major_importing, PubSubSession, FutureResult,
 	FutureResponse, FutureOutput};
 use updater::{UpdatePolicy, Updater};
+use listener::Listener;
 use parity_version::version;
 use ethcore_private_tx::{ProviderConfig, EncryptorConfig, SecretStoreEncryptor};
 use params::{
@@ -739,6 +740,13 @@ fn execute_impl<Cr, Rr>(cmd: RunCmd, logger: Arc<RotatingLogger>, on_client_rq: 
 	);
 	service.add_notify(updater.clone());
 
+	// the listener service
+	info!("Lodaing listener service...");
+	let listener = Listener::new(
+		&Arc::downgrade(&(service.client() as Arc<BlockChainClient>))
+	);
+	service.add_notify(listener.clone());
+
 	// set up dependencies for rpc servers
 	let rpc_stats = Arc::new(informant::RpcStats::default());
 	let secret_store = account_provider.clone();
@@ -852,7 +860,7 @@ fn execute_impl<Cr, Rr>(cmd: RunCmd, logger: Arc<RotatingLogger>, on_client_rq: 
 			informant,
 			client,
 			client_service: Arc::new(service),
-			keep_alive: Box::new((watcher, updater, ws_server, http_server, ipc_server, secretstore_key_server, ipfs_server, runtime)),
+			keep_alive: Box::new((watcher, updater, listener, ws_server, http_server, ipc_server, secretstore_key_server, ipfs_server, runtime)),
 		}
 	})
 }

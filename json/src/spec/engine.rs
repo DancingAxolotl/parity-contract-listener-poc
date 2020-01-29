@@ -16,7 +16,7 @@
 
 //! Engine deserialization.
 
-use super::{Ethash, BasicAuthority, AuthorityRound, NullEngine, InstantSeal};
+use super::{Ethash, BasicAuthority, AuthorityRound, MAura, NullEngine, InstantSeal};
 
 /// Engine deserialization.
 #[derive(Debug, PartialEq, Deserialize)]
@@ -34,6 +34,7 @@ pub enum Engine {
 	BasicAuthority(BasicAuthority),
 	/// AuthorityRound engine.
 	AuthorityRound(AuthorityRound),
+	MAura(MAura),
 }
 
 #[cfg(test)]

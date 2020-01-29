@@ -65,6 +65,7 @@ extern crate parity_local_store as local_store;
 extern crate parity_runtime;
 extern crate parity_rpc;
 extern crate parity_updater as updater;
+extern crate parity_listener as listener;
 extern crate parity_version;
 extern crate parity_whisper;
 extern crate parity_path as path;

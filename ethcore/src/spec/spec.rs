@@ -36,7 +36,7 @@ use vm::{EnvInfo, CallType, ActionValue, ActionParams, ParamsType};
 
 use builtin::Builtin;
 use engines::{
-	EthEngine, NullEngine, InstantSeal, InstantSealParams, BasicAuthority,
+	EthEngine, NullEngine, InstantSeal, InstantSealParams, BasicAuthority, MAura,
 	AuthorityRound, DEFAULT_BLOCKHASH_CONTRACT
 };
 use error::Error;
@@ -614,6 +614,8 @@ impl Spec {
 			ethjson::spec::Engine::BasicAuthority(basic_authority) => Arc::new(BasicAuthority::new(basic_authority.params.into(), machine)),
 			ethjson::spec::Engine::AuthorityRound(authority_round) => AuthorityRound::new(authority_round.params.into(), machine)
 				.expect("Failed to start AuthorityRound consensus engine."),
+			ethjson::spec::Engine::MAura(my_authority_round) => MAura::new(my_authority_round.params.into(), machine)
+				.expect("Failed to start MAura consensus engine."),
 		}
 	}
 
